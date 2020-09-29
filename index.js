@@ -1,20 +1,11 @@
 function findMinAndRemoveSorted(array){
-    let min = array[0]
-    let index = 0
-    array.forEach( (element, i) => {
-        if (element < min){
-            min = element
-            index = i
-        }
-    })
-    array.splice(index, 1)
-    return min
+    return array.shift()
 }
 
 
 function merge(firstHalf, secondHalf){
     let sorted = []
-    while(firstHalf.length !== 0 && secondHalf.length !==0){
+    while(firstHalf.length !== 0 && secondHalf.length !== 0){
         if(firstHalf[0] < secondHalf[0]){
             sorted.push(firstHalf.shift())
         } else {
@@ -25,9 +16,15 @@ function merge(firstHalf, secondHalf){
 }
 
 function mergeSort(array){
-    let sorted = []
-    while(array.length > 0){
-        sorted.push(findMinAndRemoveSorted(array))
+    let midpoint = array.length/2
+    let firstHalf = array.slice(0, midpoint)
+    let secondHalf = array.slice(midpoint, array.length)
+    let sorted;
+  
+    if(array.length < 2){
+      return array
+    } else {
+      sorted = merge(mergeSort(firstHalf), mergeSort(secondHalf))
     }
     return sorted
-}
+  }
